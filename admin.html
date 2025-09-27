@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Assessment Results</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #eee; }
+        tr:nth-child(even) { background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <h1>Assessment Results</h1>
+    <table id="results-table">
+        <thead>
+            <tr>
+                <th>Test Type</th>
+                <th>Score</th>
+                <th>Stage</th>
+                <th>Timestamp</th>
+                <th>Responses</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <p id="no-results" style="display:none;">No assessment results found.</p>
+    <script>
+    function renderResults() {
+        const results = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+        const tbody = document.querySelector('#results-table tbody');
+        const noResults = document.getElementById('no-results');
+        tbody.innerHTML = '';
+        if (results.length === 0) {
+            noResults.style.display = 'block';
+            document.getElementById('results-table').style.display = 'none';
+            return;
+        }
+        noResults.style.display = 'none';
+        document.getElementById('results-table').style.display = '';
+        results.forEach((row, idx) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.testType}</td>
+                <td>${row.score} / ${row.maxScore}</td>
+                <td>${row.stage}</td>
+                <td>${row.timestamp}</td>
+                <td><ul>${Object.entries(row.responses).map(([q, v]) => `<li><strong>Q${Number(q)+1}:</strong> ${v}</li>`).join('')}</ul></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+    document.addEventListener('DOMContentLoaded', renderResults);
+    </script>
+</body>
+</html>
