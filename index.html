@@ -9,6 +9,13 @@
 <body>
     <div class="container">
         <header>
+            <div class="logo-container">
+                <img src="WhatsApp Image 2025-09-24 at 12.29.57_2d3b532d.jpg" alt="FOPA DILLIGENT CONSULT Logo" class="logo">
+                <div class="logo-text">
+                    <h1>FOPA DILLIGENT CONSULT</h1>
+                    <p class="organization-tagline">Training Teachers | Emotional Therapy for Students </p>
+                </div>  
+            </div>  
             <h1>Social Emotional Students' Audit</h1>
             <p class="tagline">Select a specific assessment to evaluate your mental well-being</p>
         </header>
@@ -23,38 +30,38 @@
                     
                     <div class="test-grid">
                         <div class="test-card" onclick="selectTest('separation')">
-                            <h3>Separation Anxiety</h3>
-                            <p>Measures anxiety related to separation from home or attachment figures</p>
+                            <h3>Separation Anxiety Disorder</h3>
+                            <p>Measures anxiety related to separation or fear of being left alone</p>
                             <div class="questions-count">7 questions</div>
                         </div>
                         
                         <div class="test-card" onclick="selectTest('social')">
-                            <h3>Social Phobia</h3>
-                            <p>Assesses fear of social situations where you might be judged</p>
+                            <h3>School Phobia</h3>
+                            <p>Assesses fear of being judged or embarrased in public</p>
                             <div class="questions-count">9 questions</div>
                         </div>
                         
                         <div class="test-card" onclick="selectTest('generalized')">
-                            <h3>Generalized Anxiety</h3>
-                            <p>Evaluates excessive worry about various aspects of life</p>
+                            <h3>Generalized Anxiety Disorder</h3>
+                            <p>Evaluates constant worry about manu things and various aspects of life</p>
                             <div class="questions-count">6 questions</div>
                         </div>
                         
                         <div class="test-card" onclick="selectTest('panic')">
                             <h3>Panic Disorder</h3>
-                            <p>Measures experiences of sudden panic attacks and related symptoms</p>
+                            <p>Measures experiences of sudden fear or heart racing moments</p>
                             <div class="questions-count">9 questions</div>
                         </div>
                         
                         <div class="test-card" onclick="selectTest('ocd')">
-                            <h3>OCD</h3>
-                            <p>Assesses obsessive thoughts and compulsive behaviors</p>
+                            <h3>Obsessive Compulsive Disorder</h3>
+                            <p>Assesses uncontrollable thoughts and repeating actions</p>
                             <div class="questions-count">6 questions</div>
                         </div>
                         
                         <div class="test-card" onclick="selectTest('depression')">
-                            <h3>Depression</h3>
-                            <p>Evaluates symptoms of major depressive disorder</p>
+                            <h3>Major Depressive Disorder</h3>
+                            <p>Evaluates symptoms of deep sadness or loss of interest in life</p>
                             <div class="questions-count">10 questions</div>
                         </div>
                     </div>
@@ -107,6 +114,66 @@
     </div>
 
     <script>
+        // Scoring interpretation data
+        const scoringRanges = {
+            separation: {
+                ranges: [
+                    { min: 0, max: 5, stage: "Normal Stage", message: "Your results show that you feel okay most days. You are managing separation anxiety (fear of being left alone) very well, and can cope with school and social life." },
+                    { min: 6, max: 10, stage: "Mild Stage", message: "Your results show that you're struggling a bit more than usual. Some signs of separation anxiety (fear of being left alone) are beginning to show (manifest) but they are still manageable." },
+                    { min: 11, max: 16, stage: "Elevated Stage", message: "Your results show that separation anxiety (fear of being left alone) is becoming more serious and it's affecting your school life (i.e., academics, behaviour, relational adjustments)." },
+                    { min: 17, max: 21, stage: "Clinical/Counselling Stage", message: "Your results show that your separation anxiety (fear of being left alone) has become severe or extreme making school life very difficult. You may require a professional help including counselling and medical intervention." },
+
+                ],
+                maxScore: 21 // 7 questions, max score 3 each
+            },
+            social: {
+                ranges: [
+                    { min: 0, max: 6, stage: "Normal Stage", message: "Your results show that you feel okay most days. You are managing your fear of being judged or embarrassed in public very well, and can cope with school and social life." },
+                    { min: 7, max: 13, stage: "Mild Stage", message: "Your results show that you're struggling a bit more than usual. Some signs of social phobia (fear of being judged or embarrassed in public) are beginning to show (manifest) but they are still manageable." },
+                    { min: 14, max: 20, stage: "Elevated Stage", message: "Your results show that social phobia (fear of being judged or embarrassed in public) is becoming more serious and it's affecting your school life (i.e., academics, behaviour, relational adjustments)." },
+                    { min: 21, max: 27, stage: "Clinical/Counselling Stage", message: "Your results show that your social phobia (fear of being judged or embarrassed in public) has become severe or extreme making school life very difficult. You may require a professional help including counselling and medical intervention." },
+                ],
+                maxScore: 27 // 9 questions, max score 3 each
+            },
+            generalized: {
+                ranges: [
+            { min: 0, max: 4, stage: "Normal Stage", message: "Your results show that you feel okay most days. You are managing your possible worry about many things that may happen particularly in school." },
+            { min: 5, max: 9, stage: "Mild Stage", message: "Your results show that you're struggling a bit more than usual. Some signs of constant worrying are beginning to show but they are still manageable with the right help." },
+            { min: 10, max: 13, stage: "Elevated Stage", message: "Your results show that your constant worry about many things is becoming more serious and may be affecting your school life and relationships (academics, behaviour, relational adjustments)." },
+            { min: 14, max: 18, stage: "Clinical/Counselling Stage", message: "Your results show that your constant worrying about many things has become severe and profound making school life very difficult. You may require a professional help including counselling and medical intervention." }
+                ],
+                maxScore: 18 // 6 questions, max score 3 each
+            },
+            panic: {
+                ranges: [
+            { min: 0, max: 6, stage: "Normal Stage", message: "Your results show that you feel okay most days. You are managing your sudden fear attacks, and you are able to cope with school and social life." },
+            { min: 7, max: 13, stage: "Mild Stage", message: "Your results show that you're struggling a bit more than usual. Some signs of sudden fear attacks or panic disorder are beginning to manifest but they are still manageable." },
+            { min: 14, max: 20, stage: "Elevated Stage", message: "Your results show that sudden fear attacks or heart racing moments are becoming more serious and may be affecting your school life and social interaction (i.e., academics, behaviour, relational adjustments)." },
+            { min: 21, max: 27, stage: "Clinical/Counselling Stage", message: "Your results show that your sudden fear attacks or heart racing moments has become severe or extreme making school life very difficult. You may require a professional help including counselling and medical intervention." }
+                ],
+                maxScore: 27 // 9 questions, max score 3 each
+            },
+            ocd: {
+                ranges: [
+            { min: 0, max: 4, stage: "Normal Stage", message: "Your results indicate that you feel okay most days. You have little to no symptoms of uncontrollable thoughts and you are coping very well with school life." },
+            { min: 5, max: 9, stage: "Mild Stage", message: "Your results show that you may be struggling with repetitive thoughts. Some signs of obsessive-compulsive disorder may be manifesting but they are still manageable." },
+            { min: 10, max: 13, stage: "Elevated Stage", message: "Your results show that uncontrollable thoughts and ideation are becoming more serious and may be affecting your school life and social interaction (i.e., academics, behaviour, relational adjustments)." },
+            { min: 14, max: 18, stage: "Clinical/Counselling Stage", message: "Your results show that uncontrollable thoughts have become severe or extreme making school life very difficult. You may require a professional help including counselling and medical intervention." }
+                ],
+                maxScore: 18 // 6 questions, max score 3 each
+            },
+            depression: {
+                ranges: [
+            { min: 0, max: 7, stage: "Normal Stage", message: "Your results indicate that you feel most days. You have little to no symptoms of deep sadness or loss of interest in life generally." },
+            { min: 8, max: 15, stage: "Mild Stage", message: "Your results show that you may be struggling with major depressive disorder. Some symptoms of deep sadness or loss of interest in life may be showing but they are still manageable." },
+            { min: 16, max: 22, stage: "Elevated Stage", message: "Your results show that your loss of interest in life or deep sadness is becoming more serious and may be affecting your school life and social interaction (i.e., academics, behaviour, relational adjustments)." },
+            { min: 23, max: 30, stage: "Counselling/Clinical Stage", message: "Your results show that your loss of interest in life has become severe or extreme making school and social life very difficult. You may require a professional help including counselling and medical intervention." }
+                ],
+                maxScore: 30 // 10 questions, max score 3 each
+            }
+
+        };
+
         // Test data
         const tests = {
             separation: {
@@ -122,7 +189,7 @@
                 ]
             },
             social: {
-                title: "Social Phobia",
+                title: "School Phobia",
                 questions: [
                     "I worry when I think I have done poorly at something such as class test and examination",
                     "I feel worried when I have to take a class test",
@@ -328,35 +395,57 @@
             document.getElementById('survey-section').classList.add('hidden');
             document.getElementById('completion-section').classList.remove('hidden');
             
-            // Calculate a simple score (for demonstration only)
+            // Calculate score based on your point system (Never=0, Sometimes=1, Often=2, Always=3)
             const score = Object.values(responses).reduce((sum, response) => sum + (response || 0), 0);
-            const maxScore = tests[currentTest].questions.length * 3;
-            const percentage = (score / maxScore) * 100;
-            
-            // Display results based on score
-            let resultText = "";
-            if (percentage < 25) {
-                resultText = "Based on your responses, you appear to have minimal symptoms in this area. This is a positive indicator of your mental well-being.";
-            } else if (percentage < 50) {
-                resultText = "Your responses suggest you may be experiencing some mild symptoms. It might be helpful to monitor these feelings and consider speaking with a professional if they persist.";
-            } else if (percentage < 75) {
-                resultText = "Your results indicate moderate symptoms that may be affecting your daily life. It's recommended to consult with a mental health professional for further evaluation.";
-            } else {
-                resultText = "Your responses suggest you may be experiencing significant symptoms. We strongly recommend consulting with a mental health professional for a comprehensive evaluation and support.";
-            }
-            
-            document.getElementById('results-content').textContent = resultText;
+            const maxScore = scoringRanges[currentTest].maxScore;
+
+            // Find the appropriate stage based on score
+            const stageInfo = scoringRanges[currentTest].ranges.find(range => 
+                score >= range.min && score <= range.max
+            ) || scoringRanges[currentTest].ranges[scoringRanges[currentTest].ranges.length - 1];
+
+            // Display results
+            const resultsContent = document.getElementById('results-content');
+            resultsContent.innerHTML = `
+                <div class="score-display">
+                    <h4>Your Score: ${score} out of ${maxScore}</h4>
+                    <div class="stage-indicator ${stageInfo.stage.toLowerCase().replace('/', '-').replace(' ', '-')}">
+                        <strong>${stageInfo.stage}</strong>
+                    </div>
+                </div>
+                <div class="interpretation">
+                    <p>${stageInfo.message}</p>
+                </div>
+                <div class="score-breakdown">
+                    <p><strong>Score Interpretation:</strong></p>
+                    <p>${score} points: ${getScoreDescription(score, currentTest)}</p>
+                </div>
+            `;
             
             // Send data to backend
-            sendResultsToBackend();
+            sendResultsToBackend(score, stageInfo.stage);
+        }
+
+        // Helper function to get score description
+        function getScoreDescription(score, testType) {
+             const ranges = scoringRanges[testType].ranges;
+            for (let range of ranges) {
+                if (score >= range.min && score <= range.max) {
+                    return `This falls within the ${range.stage} range (${range.min}-${range.max} points)`;
+                }
+            }
+            return "Score interpretation not available";
         }
         
         // Send results to backend
-        function sendResultsToBackend() {
+        function sendResultsToBackend(score, stage) {
             const data = {
                 testType: currentTest,
+                testTitle: tests[currentTest].title,
                 responses: responses,
-                score: Object.values(responses).reduce((sum, response) => sum + (response || 0), 0),
+                score: score,
+                stage: stage,
+                maxScore: scoringRanges[currentTest].maxScore,
                 timestamp: new Date().toISOString()
             };
             
